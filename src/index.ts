@@ -5,10 +5,11 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
-export const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
-app.use('/api', mailRouter);
+app.use("/api", mailRouter);
 
-app.listen(port, initialLog);
+// Zamiast app.listen(), musisz wyeksportować swoją aplikację express
+export default app;
