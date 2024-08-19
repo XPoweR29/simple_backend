@@ -20,4 +20,8 @@ export class MailController {
             res.status(500).json({success: false, message: `Błąd podczas wysyałania wiadomośći`});
         };
     };
+
+    public gretting(req: Request, res: Response): void {
+        res.status(200).send("SIMPLE BACKEND");
+    }
 };
