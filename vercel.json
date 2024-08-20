@@ -9,23 +9,14 @@
 			}
 		}
 	],
-	"routes": [
-		{
-			"src": "/(.*)",
-			"dest": "/src/index.ts"
-		}
-	],
 	"headers": [
 		{
 			"source": "/api/(.*)",
 			"headers": [
-				{
-					"key": "Access-Control-Allow-Credentials",
-					"value": "true"
-				},
+				{ "key": "Access-Control-Allow-Credentials", "value": "true" },
 				{
 					"key": "Access-Control-Allow-Origin",
-					"value": "https://www.webcraft-studio.pl"
+					"value": "https://webcraft-studio.pl"
 				},
 				{
 					"key": "Access-Control-Allow-Methods",
