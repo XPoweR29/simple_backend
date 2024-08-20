@@ -1,6 +1,5 @@
 
-import { Request, Response, Router } from "express";
-import { FormData } from "../types/types";
+import { Router } from "express";
 import { MailController } from "../controllers/mail.controller";
 
 export const mailRouter = Router();

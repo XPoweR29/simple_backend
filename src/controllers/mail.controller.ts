@@ -1,7 +1,6 @@
-import { SendMailDto } from './../DTO/email.dto';
+
 import { Request, Response } from "express";
 import { MailService } from "../services/mail.service";
-import { plainToInstance } from "class-transformer";
 
 export class MailController {
     private mailService: MailService;

@@ -19,7 +19,4 @@ export class SendMailDto {
 	@IsString()
 	@IsNotEmpty()
 	message: string;
-
-	@IsBoolean()
-	consent: boolean;
 }

@@ -15,7 +15,6 @@ export class MailService {
 		subject = "Nowa wiadomość",
 		message,
 		email,
-		consent,
 	}: FormData) {
 		const msg = {
 			to: "kontakt@webcraft-studio.pl",
