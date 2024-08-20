@@ -7,10 +7,12 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(cors({
-    origin: process.env.ALLOWED_HOST,
-    credentials: true,
-}));
+app.use(
+	cors({
+		origin: "https://webcraft-studio.pl/",
+		credentials: true,
+	})
+);
 
 app.use(express.json());
 
