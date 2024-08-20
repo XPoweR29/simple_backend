@@ -1,6 +1,5 @@
 import express from "express";
 import { mailRouter } from "./routes/mailRouter";
-import cors from "cors";
 import * as dotenv from "dotenv";
 dotenv.config();
 
