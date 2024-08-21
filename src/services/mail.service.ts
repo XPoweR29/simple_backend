@@ -1,6 +1,9 @@
 import sgMail from "@sendgrid/mail";
 import { FormData } from "../types/types";
 import * as dotenv from "dotenv";
+import { serverLog } from "../utils/serverLog";
+import path from "path";
+import * as fs from "fs";
 dotenv.config();
 
 
@@ -16,22 +19,23 @@ export class MailService {
 		message,
 		email,
 	}: FormData) {
+		const templatePath = path.join(__dirname, "../templates/WCSmailTemplate/mailTemplate.html");
+		let mailTemplate = fs.readFileSync(templatePath, "utf-8");
+			mailTemplate = mailTemplate.replace("{{name}}", name);
+			mailTemplate = mailTemplate.replace("{{phone}}", phone);
+			mailTemplate = mailTemplate.replace("{{subject}}", subject);
+			mailTemplate = mailTemplate.replace("{{message}}", message);
+			mailTemplate = mailTemplate.replace("{{email}}", email);
+
 		const msg = {
 			to: "kontakt@webcraft-studio.pl",
 			from: "kontakt@webcraft-studio.pl",
 			subject: subject,
 			text: message,
-			html: ` <h1>Wiadomosć ze strony WebCraft-STUDIO</h1>
-                    <br>
-                    <p>Masz nową wiadomość od użytkownika: <strong>${name}</strong></p>
-                    <p>${email}</p>
-                    <p>${phone}</p>
-                    <br><br>
-                    <p><strong>${subject}</strong></p>
-                    <p>${message}</p>
-                    `,
+			html: mailTemplate,
 		};
 
         await sgMail.send(msg);
+		serverLog("Email has been sent successfully");
 	}
 }
