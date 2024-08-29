@@ -7,8 +7,8 @@ export class DishEntity extends BaseEntity implements Dish {
 	@PrimaryGeneratedColumn("uuid")
 	id: string;
 
-	@ManyToOne(() => DishGroupEntity, dishGroup => dishGroup.dishes)
-	group: string;
+	@ManyToOne(() => DishGroupEntity, dishGroup => dishGroup.dishes, {onDelete: "CASCADE"})
+	group: DishGroupEntity;
 
 	@Column({length: 50})
 	name: string;

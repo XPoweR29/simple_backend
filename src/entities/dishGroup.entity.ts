@@ -10,7 +10,7 @@ export class DishGroupEntity extends BaseEntity implements DishGroup {
     @Column({unique: true})
     name: string;
     
-    @OneToMany(() => DishEntity, dish => dish.group)
+    @OneToMany(() => DishEntity, dish => dish.group, {cascade: ['remove']})
     dishes: Dish[];
 
 }
