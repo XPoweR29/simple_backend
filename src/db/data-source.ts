@@ -1,16 +1,18 @@
 import "reflect-metadata";
+import * as dotenv from "dotenv";
 import { DataSource } from "typeorm";
+dotenv.config();
+
 
 export const AppDataSource = new DataSource({
 	type: "mysql",
-	host: "srv861.hstgr.io",
+	host: process.env.ADONA_DB_HOSTNAME,
 	port: 3306,
-	username: "u646570781_admin_adona",
-    // FIXME: pwd must be keep in env!
-	password: "Q&TjaKZIgy8",
-	database: "u646570781_ADONA_menu",
+	username: process.env.ADONA_DB_USER,
+	password: process.env.ADONA_DB_PASS,
+	database: process.env.ADONA_DB_DATABASE,
 	synchronize: false,
-	logging: true,
+	logging: false,
 	entities: ["src/entities/*.ts"],
 	migrations: [],
 	subscribers: [],

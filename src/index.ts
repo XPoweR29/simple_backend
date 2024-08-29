@@ -1,11 +1,11 @@
 import express from "express";
 import "express-async-errors";
 import { mailRouter } from "./routes/mailRouter";
+import { adonaRouter } from "./routes/ADONA/adonaRouter";
 import * as dotenv from "dotenv";
 import { handleError } from "./middlewares/handleError";
 import { initializeDatabase } from "./utils/db-initialization";
 import { initialLog } from "./utils/serverLog";
-import { adonaRouter } from "./routes/ADONA/adonaRouter";
 dotenv.config();
 
 export const port = process.env.PORT || 3000;
@@ -20,6 +20,6 @@ app.use("/api/adona", adonaRouter);
 
 app.use(handleError);
 
-app.listen(port, initialLog);
+// app.listen(port, initialLog);
 
-// export default app;
+export default app;
