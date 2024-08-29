@@ -12,7 +12,6 @@ export const port = process.env.PORT || 3000;
 
 initializeDatabase();
 const app = express();
-
 app.use(express.json());
 
 app.use("/api", mailRouter);
@@ -20,6 +19,6 @@ app.use("/api/adona", adonaRouter);
 
 app.use(handleError);
 
-// app.listen(port, initialLog);
+app.listen(port, initialLog);
 
 export default app;

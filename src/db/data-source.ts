@@ -12,7 +12,7 @@ export const AppDataSource = new DataSource({
 	password: process.env.ADONA_DB_PASS,
 	database: process.env.ADONA_DB_DATABASE,
 	synchronize: false,
-	logging: false,
+	logging: true,
 	entities: ["src/entities/*.js"],
 	migrations: [],
 	subscribers: [],

@@ -17,6 +17,6 @@ export const handleError = (err: Error, req: Request, res: Response, next: NextF
     res
         .status(err instanceof ValidationError ? (err.statusCode) : 500)
         .json({
-            message: err instanceof ValidationError ? err.message : "Wystąpił błąd, spróbój ponownie później..."
+            message: err instanceof ValidationError ? err.message : `Wystąpił błąd, spróbój ponownie później..., ${err}`
         });
 };
