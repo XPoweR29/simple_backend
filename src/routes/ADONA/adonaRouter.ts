@@ -1,8 +1,11 @@
 import { Request, Response, Router } from "express";
 import { AdonaController } from "../../controllers/adona.controller";
+import { databaseInit } from "../../middlewares/databaseInit.middleware";
 
 export const adonaRouter = Router();
 const adonaController = new AdonaController();
+
+adonaRouter.use(databaseInit);
 
 adonaRouter
 //group routes
@@ -11,6 +14,7 @@ adonaRouter
 .get('/group', adonaController.getGroupByName.bind(adonaController))
 .post('/group', adonaController.createNewGroup.bind(adonaController))
 .patch('/group/:id', adonaController.editGroup.bind(adonaController))
+.patch('/group', adonaController.updateGroupOrder.bind(adonaController))
 .delete('/group/:id', adonaController.removeGroup.bind(adonaController))
 
 //dish routes

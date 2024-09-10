@@ -13,4 +13,7 @@ export class DishGroupEntity extends BaseEntity implements DishGroup {
     @OneToMany(() => DishEntity, dish => dish.group, {cascade: ['remove']})
     dishes: Dish[];
 
+    @Column({type: "int"})
+    order: number;
+
 }

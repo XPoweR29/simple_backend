@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { AdonaService } from "../services/adona.service";
 import { validateDTO } from "../utils/validateDTO";
-import { CreatGroupDTO, CreateDishDTO, GetDishByNameDTO } from "../DTO/adona.tdo";
+import { CreatGroupDTO, CreateDishDTO, GetDishByNameDTO, UpdateDishDTO, UpdateGroupOrderDTO } from "../DTO/adona.tdo";
 
 export class AdonaController {
 	private adonaService: AdonaService;
@@ -17,7 +17,7 @@ export class AdonaController {
 		const validData = await validateDTO(CreatGroupDTO, req.body);
 		const newGroup = await this.adonaService.addNewGroup(validData.name);
 		res.status(201).json({
-			message: `Grupa ${newGroup.name} została utowrzona`,
+			message: `Grupa "${newGroup.name}" została utowrzona`,
 			data: newGroup,
 		});
 	}
@@ -45,7 +45,20 @@ export class AdonaController {
 
 	async removeGroup(req: Request, res: Response): Promise<void> {
 		const removedGroup = await this.adonaService.deleteGroup(req.params.id);
-        res.json(`Grupa ${removedGroup.name} została usunięta`);
+        res.json({message: `Grupa "${removedGroup.name}" została usunięta`});
+	}
+
+	async updateGroupOrder(req: Request, res: Response): Promise<void> {
+		const groupsWithIndex = req.body;
+		try{
+			for(const index of groupsWithIndex){
+				await validateDTO(UpdateGroupOrderDTO, index);
+			};
+			await this.adonaService.updateGroupOrder(groupsWithIndex);
+			res.json({message: "Grupy zostały poprawnie zindeksowane"});
+		} catch(err) {
+			res.status(400).json({message: "Błąd podczas indeksowania grup"});
+		}
 	}
 
 	//dish controller
@@ -62,22 +75,22 @@ export class AdonaController {
 		const validData = await validateDTO(CreateDishDTO, req.body);
 		const newDish = await this.adonaService.addNewDish(validData);
 		res.status(201).json({
-			message: `Danie ${newDish.name} zostało dodane`,
+			message: `Danie "${newDish.name}" zostało dodane`,
 			data: newDish,
 		});
 	}
 
 	async editDish(req: Request, res: Response): Promise<void> {
-        const validData = await validateDTO(CreateDishDTO, req.body);
+        const validData = await validateDTO(UpdateDishDTO, req.body);
         const updatedDish = await this.adonaService.updateDish(req.params.id, validData);
         res.json({
-            message: `Danie ${updatedDish.name} zostało zaktualizowane`,
+            message: `Danie "${updatedDish.name}" zostało zaktualizowane`,
             data: updatedDish
         });
     }
 
     async removeDish(req: Request, res: Response): Promise<void> {
         const removedDish = await this.adonaService.deleteDish(req.params.id);
-        res.json({message: `Danie ${removedDish.name} zostało usunięte`});
+        res.json({message: `Danie "${removedDish.name}" zostało usunięte`});
     }
 }

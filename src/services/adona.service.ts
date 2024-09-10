@@ -5,11 +5,26 @@ import { ValidationError } from "../middlewares/handleError";
 import { HttpStatus } from "../types/httpExeptions";
 import { DishGroupEntity } from "../entities/dishGroup.entity";
 import { Like } from "typeorm";
-import { CreateDishDTO } from "../DTO/adona.tdo";
+import { CreateDishDTO, UpdateGroupOrderDTO } from "../DTO/adona.tdo";
 
 export class AdonaService {
+	private async getMaxOrderGroupIndex(): Promise<number> {
+		const topGroup = await DishGroupEntity.createQueryBuilder('group')
+			.select('MAX(group.order)', 'orderIndex')
+			.getRawOne<{orderIndex: number | null}>();
+			return topGroup.orderIndex ?? 0;
+	}
+
+	private async updateGroupIndexes(removedIndex: number): Promise<void> {
+		await DishGroupEntity.createQueryBuilder()
+			.update(DishGroupEntity)
+			.set({order: ()=> 'order -1'})
+			.where('order > :removedIndex', {removedIndex})
+			.execute();
+	}
+
 	async getMenu() {
-		const menu = await DishGroupEntity.find({ relations: ["dishes"] });
+		const menu = await DishGroupEntity.find({ relations: ["dishes"], order: {order: "ASC"}});
 		if (!menu) throw new ValidationError("Nie znaleziono MENU");
 		return menu;
 	}
@@ -47,7 +62,8 @@ export class AdonaService {
 			throw new ValidationError("Grupa o podanej nazwie już istnieje");
 		}
 
-		const newGroup = DishGroupEntity.create({ name });
+		const maxGroupIndex = await this.getMaxOrderGroupIndex();
+		const newGroup = DishGroupEntity.create({ name, order: maxGroupIndex+1 });
 		await DishGroupEntity.save(newGroup);
 		serverLog(`New group of dishes created: "${newGroup.name}"`);
 		return newGroup;
@@ -69,12 +85,32 @@ export class AdonaService {
 		try {
 			const group = await DishGroupEntity.findOneOrFail({ where: { id } });
 			await group.remove();
+			await this.updateGroupIndexes(group.order);
+
 			return group;
+			
 		} catch (err) {
 			throw new ValidationError(
 				err,
 				HttpStatus.NOT_FOUND
 			);
+		}
+	}
+
+	async updateGroupOrder(groups: UpdateGroupOrderDTO[]) {
+		if(groups.length === 0) return;
+
+		try {
+			for(const group of groups) {
+				await DishGroupEntity.createQueryBuilder()
+					.update(DishGroupEntity)
+					.set({order: group.order})
+					.where('id = :id', {id: group.id})
+					.execute();
+			};
+			serverLog("Groups order updated successfully");
+		} catch(err) {
+			throw new ValidationError("Error during updating", err);
 		}
 	}
 
@@ -109,9 +145,9 @@ export class AdonaService {
 		const dish = await DishEntity.findOne({ where: { id } });
 		if (!dish) throw new ValidationError("Danie o podanym ID nie istnieje");
 		Object.assign(dish, data);
-		dish.save();
+		const updatedDish = await dish.save();
 		serverLog(`Dish ${dish.name} has been updated`);
-		return dish;
+		return updatedDish;
 	}
 
 	async deleteDish(id: string): Promise<Dish> {

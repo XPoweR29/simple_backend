@@ -11,7 +11,6 @@ export const initializeDatabase = async (): Promise<DataSource> => {
 		console.log("Data Source is already initialized 💾 ➡ ✅");
 		return dataSource;
 	}
-
 	try {
 		dataSource = new DataSource({
 			type: "mysql",
@@ -28,7 +27,7 @@ export const initializeDatabase = async (): Promise<DataSource> => {
 		});
 
 		await dataSource.initialize();
-		console.log("Data Source is already initialized 💾 ➡ ✅");
+		console.log("Data Source has been initialized successfully 💾 ➡ ✅");
 
 		return dataSource;
 	} catch (err) {
