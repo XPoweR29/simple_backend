@@ -1,7 +1,7 @@
 {
 	"name": "node_backend",
-	"version": "1.0.0",
-	"description": "",
+	"version": "1.1.0",
+	"description": "Backend API for multiple pages with advanced template handling.",
 	"main": "index.js",
 	"scripts": {
 		"dev": "cross-env NODE_ENV=development nodemon"
