@@ -20,5 +20,6 @@ app.use("/api", mailRouter);
 app.use("/api/adona", adonaRouter);
 app.use(handleError);
 
-app.listen(port, initialLog);
+if(process.env.NODE_ENV ==='development') app.listen(port, initialLog);
+
 export default app;
