@@ -4,6 +4,62 @@ Ten dokument opisuje kroki niezbędne do dodania nowego sendera do backendu, aby
 
 ---
 
+## Uruchamianie lokalnie
+
+### **Kroki:**
+
+1. **Pobierz repozytorium:**
+   Skopiuj repozytorium na swoją maszynę lokalną:
+
+   ```bash
+   git clone https://github.com/XPoweR29/simple_backend.git
+   cd simple_backend
+   ```
+
+2. **Zainstaluj zależności:**
+   Uruchom poniższe polecenie, aby zainstalować wymagane moduły:
+
+   ```bash
+   npm install
+   ```
+
+3. **Skonfiguruj zmienne środowiskowe:**
+
+   - Utwórz plik `.env` w katalogu głównym projektu:
+     ```bash
+     touch .env
+     ```
+   - Uzupełnij plik `.env` odpowiednimi zmiennymi, które muszą być uwzględnione w plikach `data-source.ts` oraz `mail.service.ts`.
+   - Najważniejsze: upewnij się, że zmienna `API_KEY` jest poprawnie ustawiona, ponieważ obsługuje ona wysyłanie wiadomości e-mail dla różnych serwisów.
+
+4. **Uruchom aplikację:**
+   W trybie deweloperskim uruchom aplikację za pomocą:
+
+   ```bash
+   npm run dev
+   ```
+
+5. **Testuj lokalnie:**
+   Aplikacja będzie działać pod adresem:
+
+   ```
+   http://localhost:3001
+   ```
+
+---
+
+## Spis treści
+
+1. [Wymagania wstępne](#1-wymagania-wstępne)
+2. [Konfiguracja SendGrid](#2-konfiguracja-sendgrid)
+3. [Konfiguracja formularza](#3-konfiguracja-formularza)
+4. [Przykładowe zapytanie HTTP](#4-przykładowe-zapytanie-http)
+5. [Testowanie](#5-testowanie)
+6. [Rozwiązywanie problemów](#6-rozwiązywanie-problemów)
+7. [Dodawanie nowych zmiennych](#7-dodawanie-nowych-zmiennych)
+
+---
+
 ## **1. Wymagania wstępne**
 
 - Konto na platformie **SendGrid**.
@@ -146,8 +202,4 @@ Jeśli formularz ma zawierać nowe zmienne (np. `surname`, `age`), należy podj�
    - Dodaj zmienne w szablonie HTML, zarówno w domyślnym, jak i przesyłanym przez użytkownika.
 4. **Aktualizacja dokumentacji**:
    - Uwzględnij nowe pola w instrukcji i przykładach zapytań w tym pliku.
-
----
-
-Jeśli masz pytania lub problemy, skontaktuj się z administratorem backendu.
 
