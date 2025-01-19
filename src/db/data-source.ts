@@ -12,8 +12,10 @@ export const initializeDatabase = async (): Promise<DataSource> => {
 		return dataSource;
 	}
 	try {
+		const isDevelopment = process.env.NODE_ENV === 'development';
+
 		dataSource = new DataSource({
-			type: "mysql",
+			type: 'mysql',
 			host: process.env.ADONA_DB_HOSTNAME,
 			port: 3306,
 			username: process.env.ADONA_DB_USER,
@@ -21,7 +23,7 @@ export const initializeDatabase = async (): Promise<DataSource> => {
 			database: process.env.ADONA_DB_DATABASE,
 			synchronize: false,
 			logging: false,
-			entities: ["src/entities/*.js"],
+			entities: isDevelopment ? ['src/entities/*.ts'] : ['src/entities/*.js'],
 			migrations: [],
 			subscribers: [],
 		});

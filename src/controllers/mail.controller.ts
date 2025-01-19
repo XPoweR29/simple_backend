@@ -19,6 +19,6 @@ export class MailController {
     };
 
     public gretting(req: Request, res: Response): void {
-        res.status(200).send('SIMPLE BACKEND v.1.0');
+        res.status(200).send('SIMPLE BACKEND v.1.1.0');
     }
 };
