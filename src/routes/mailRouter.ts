@@ -10,3 +10,4 @@ mailRouter
 .get('/', mailController.gretting.bind(mailController))
 
 .post("/send-mail", mailController.sendMail.bind(mailController));
+

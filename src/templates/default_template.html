@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f3f4f6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border: 1px solid #dcdcdc;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            padding: 15px 0;
+            background-color: #2196F3;
+            color: #ffffff;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .header h1 {
+            font-size: 22px;
+            margin: 0;
+        }
+
+        .content {
+            padding: 20px;
+            color: #333333;
+        }
+
+        .content p {
+            margin: 10px 0;
+            color: #555555;
+        }
+
+        .contact_data {
+            padding-bottom: 1em;
+            border-bottom: 1px solid lightgray;
+        }
+
+        .subject {
+            margin-top: 2em;
+            font-size: 1.2em;
+            font-weight: bold;
+            text-align: left;
+            color: #555555;
+        }
+
+        .content strong {
+            margin-right: 0.3em;
+            color: #2196F3;
+        }
+
+        .footer {
+            margin-top: 1em;
+            text-align: center;
+            padding: 1em;
+            background-color: #f1f1f1;
+            color: #666666;
+            border-radius: 0 0 8px 8px;
+            font-size: 0.8em;
+        }
+
+        .footer p {
+            margin: 0;
+        }
+    </style>
+    <title>Nowa wiadomość od klienta</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Nowa wiadomość od klienta</h1>
+        </div>
+        <div class="content">
+            <div class="contact_data">
+                <p><strong>Imię:</strong>{{name}}</p>
+                <p><strong>Telefon:</strong>{{phone}}</p>
+                <p><strong>Adres e-mail:</strong>{{email}}</p>
+            </div>
+
+            <h3 class="subject">{{subject}}</h3>
+            <p class="message">{{message}}</p>
+        </div>
+
+        <div class="footer">
+            <p>Ta wiadomość została przesłana przez formularz kontaktowy na Twojej stronie internetowej.</p>
+            <p>
+                Możesz odpowiedzieć bezpośrednio, używając opcji "Odpowiedz" w swojej skrzynce pocztowej, lub
+                skontaktować się z nadawcą za pomocą danych kontaktowych zawartych w treści wiadomości.
+            </p>
+
+        </div>
+    </div>
+</body>
+
+</html>
