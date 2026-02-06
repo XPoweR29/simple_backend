@@ -1,4 +1,3 @@
-import sgMail from '@sendgrid/mail';
 import { FormData } from '../types/types';
 import * as dotenv from 'dotenv';
 import { serverLog } from '../utils/serverLog';
@@ -6,17 +5,20 @@ import path from 'path';
 import * as fs from 'fs/promises';
 import { ValidationError } from '../middlewares/handleError';
 import { HttpStatus } from '../types/httpExeptions';
+import { Resend } from 'resend';
 dotenv.config();
 
 export class MailService {
+	private resend: Resend;
+
 	constructor() {
-		if (!process.env.API_KEY) {
+		if (!process.env.RESEND_API_KEY) {
 			throw new ValidationError(
-				'API_KEY is not defined in the environment variables',
+				'RESEND_API_KEY is not defined in the environment variables',
 				HttpStatus.NOT_FOUND
 			);
 		}
-		sgMail.setApiKey(process.env.API_KEY);
+		this.resend = new Resend(process.env.RESEND_API_KEY);
 	}
 
 	public async sendMail({
@@ -51,16 +53,19 @@ export class MailService {
 			return variables[key] || '';
 		});
 
-		const msg = {
-			to: recipient,
+		const { error } = await this.resend.emails.send({
 			from: sender,
+			to: [recipient],
 			subject: subject,
 			text: message,
 			html: mailTemplate,
 			replyTo: email,
-		};
+		});
 
-		await sgMail.send(msg);
+		if(error) {
+			throw new ValidationError(`Resend Error: ${error.message}`, HttpStatus.BAD_REQUEST);
+		}
+
 		serverLog(`Email has been sent successfully to ${recipient}`);
 	}
 }
